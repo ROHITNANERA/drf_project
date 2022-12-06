@@ -1,4 +1,3 @@
-from numpy import source
 from rest_framework import serializers
 from .models import Doctor, Hospital, Patient, Review
 from django.contrib.auth.models import User
@@ -65,10 +64,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         if pass1!=pass2:
             raise serializers.ValidationError({"Error: Your password and confirm password are not same!"})
-        
         if User.objects.filter(email=self.validated_data['email']).exists():
-            raise serializers.ValidationError({"Error: Email is alredy Registered."})
-        
+            raise serializers.ValidationError({"Error: Email is alredy Registered."})  
         newuser = User(email = self.validated_data['email'],username=self.validated_data['username'])
         newuser.set_password(pass1)
         newuser.save()
